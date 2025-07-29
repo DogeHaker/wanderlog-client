@@ -76,7 +76,9 @@ export default {
           icon: 'success',
           confirmButtonColor: '#1565c0'
         }).then(() => {
-          this.$router.push('/travels').then(() => window.location.reload())
+          setTimeout(() => {
+            this.$router.push('/travels')
+          }, 100)
         })
 
       } catch (err) {
