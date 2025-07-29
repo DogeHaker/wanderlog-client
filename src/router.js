@@ -50,7 +50,7 @@ const router = createRouter({
 
 // Redirect to login if not logged in
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = !!localStorage.getItem('userId')
+  const isLoggedIn = !!localStorage.getItem('token')
   if (!isLoggedIn && to.path !== '/login' && to.path !== '/register') {
     next('/login')
   } else {
