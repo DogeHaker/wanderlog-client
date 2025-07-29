@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 // Use Vite environment variable
-const baseURL = import.meta.env.VITE_API_BASE || 'http://localhost:3000'
+const baseURL = process.env.VUE_APP_API_BASE || 'http://localhost:3000'
 
 const api = axios.create({ baseURL })
 
