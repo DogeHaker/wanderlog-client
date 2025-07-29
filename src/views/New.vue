@@ -60,7 +60,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
-import axios from 'axios'
+import api from '@/helpers/axios'
 import { addNewTravel } from '@/helpers/api'
 
 export default {
@@ -96,7 +96,7 @@ export default {
       uploading.value = true
 
       try {
-        const res = await axios.post('http://localhost:3000/travels/upload', formData)
+        const res = await api.post('/travels/upload', formData)
         travel.value.imageUrl = res.data.imageUrl
       } catch (err) {
         console.error('Upload failed:', err)
