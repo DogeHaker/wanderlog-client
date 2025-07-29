@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // Use environment variable (set in Vercel as VITE_API_BASE)
-const backendUrl = `${import.meta.env.VITE_API_BASE}/travels/`
+const backendUrl = `${process.env.VUE_APP_API_BASE}/travels/`
 
 // Helper: attach JWT token from localStorage
 const getHeaders = () => {
