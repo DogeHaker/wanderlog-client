@@ -1,4 +1,3 @@
-// src/helpers/axios.js
 import axios from 'axios'
 
 // Use Vite environment variable
