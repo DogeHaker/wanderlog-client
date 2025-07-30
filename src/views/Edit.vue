@@ -14,13 +14,6 @@
       </div>
 
       <div class="field">
-        <label class="bold-label">🔖 Status</label><br />
-        <n-tag :type="futureDate ? 'info' : 'success'">
-          {{ futureDate ? 'Wishlist' : 'Visited' }}
-        </n-tag>
-      </div>
-
-      <div class="field">
         <label class="bold-label">🗓️ When did you travel here? (Or still planning?)</label>
         <n-date-picker
           v-model:value="travel.travelDate"
@@ -29,6 +22,13 @@
           size="medium"
           style="width: 100%;"
         />
+      </div>
+
+      <div class="field">
+        <label class="bold-label">🤔 Have we been here before? (Automatically updates on date)</label><br />
+        <n-tag :type="futureDate ? 'info' : 'success'">
+          {{ futureDate ? 'Wishlist' : 'Visited' }}
+        </n-tag>
       </div>
 
       <div class="field">
