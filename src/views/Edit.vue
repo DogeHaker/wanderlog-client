@@ -26,8 +26,12 @@
 
       <div class="field">
         <label class="bold-label">🤔 Have we been here before? (Automatically updates on date)</label><br />
-        <n-tag :type="futureDate ? 'info' : 'success'">
-          {{ futureDate ? 'Wishlist' : 'Visited' }}
+        <n-tag :type="{
+          visited: 'success',
+          planned: 'warning',
+          wishlist: 'info'
+        }[computedStatus]">
+          {{ dateStatus.charAt(0).toUpperCase() + dateStatus.slice(1) }}
         </n-tag>
       </div>
 
@@ -89,29 +93,16 @@ export default {
       }
     })
 
-    const futureDate = computed(() => {
-      if (!travel.value.travelDate) return false
-      const selected = new Date(travel.value.travelDate)
+    const dateStatus = computed(() => {
+      const date = travel.value.travelDate
+      if (!date) return 'wishlist'
+
+      const selected = new Date(date)
       const today = new Date()
       selected.setHours(0, 0, 0, 0)
       today.setHours(0, 0, 0, 0)
-      return selected > today
-    })
 
-    // Auto-switch status before saving
-    watch(() => travel.value.travelDate, (newDate) => {
-      const today = new Date()
-      today.setHours(0, 0, 0, 0)
-      const selected = new Date(newDate)
-      selected.setHours(0, 0, 0, 0)
-
-      if (selected > today && travel.value.status === 'visited') {
-        travel.value.status = 'wishlist'
-      }
-
-      if (selected <= today && travel.value.status === 'wishlist') {
-        travel.value.status = 'visited'
-      }
+      return selected > today ? 'planned' : 'visited'
     })
 
     const handleImage = async (e) => {
@@ -142,7 +133,7 @@ export default {
         return
     }
 
-    travel.value.status = futureDate.value ? 'wishlist' : 'visited'
+    travel.value.status = computedStatus.value
 
     const result = await editTravel(route.params.id, travel.value)
     if (!result) {
@@ -158,7 +149,7 @@ export default {
       uploading,
       handleImage,
       onSubmit,
-      futureDate
+      dateStatus
     }
   }
 }

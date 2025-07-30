@@ -19,6 +19,7 @@
             { label: 'All', value: 'all' },
             { label: 'Visited', value: 'visited' },
             { label: 'Wishlist', value: 'wishlist' },
+            { label: 'Planned', value: 'planned' },
             { label: 'Newest first', value: 'sort=desc' },
             { label: 'Oldest first', value: 'sort=asc' }
           ]"
@@ -61,8 +62,14 @@
 
           <p>{{ travel.notes }}</p>
 
-          <n-tag :type="travel.status === 'visited' ? 'success' : 'info'">
-            {{ travel.status }}
+          <n-tag
+            :type="{
+              visited: 'success',
+              wishlist: 'info',
+              planned: 'warning'
+            }[travel.status] || 'default'"
+          >
+            {{ travel.status.charAt(0).toUpperCase() + travel.status.slice(1) }}
           </n-tag>
 
           <div class="created-at">

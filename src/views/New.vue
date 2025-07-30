@@ -27,9 +27,14 @@
 
         <div class="field">
           <label class="bold-label">🤔 Have we been here before? (Automatically updates on date)</label><br />
-          <n-tag :type="futureDate ? 'info' : 'success'">
-            {{ futureDate ? 'Wishlist' : 'Visited' }}
+          <n-tag :type="{
+            visited: 'success',
+            planned: 'warning',
+            wishlist: 'info'
+          }[dateStatus]">
+            {{ computedStatus.charAt(0).toUpperCase() + computedStatus.slice(1) }}
           </n-tag>
+
         </div>
 
         <div class="field">
@@ -78,13 +83,16 @@ export default {
 
     const uploading = ref(false)
 
-    const futureDate = computed(() => {
-      if (!travel.value.travelDate) return false
-      const selected = new Date(travel.value.travelDate)
+    const dateStatus = computed(() => {
+      const date = travel.value.travelDate
+      if (!date) return 'wishlist'
+
+      const selected = new Date(date)
       const today = new Date()
       selected.setHours(0, 0, 0, 0)
       today.setHours(0, 0, 0, 0)
-      return selected > today
+
+      return selected > today ? 'planned' : 'visited'
     })
 
     const handleImage = async (e) => {
@@ -115,7 +123,7 @@ export default {
         return
       }
 
-      travel.value.status = futureDate.value ? 'wishlist' : 'visited'
+      travel.value.status = dateStatus.value
 
       await addNewTravel(travel.value)
       Swal.fire('Added!', 'New travel log has been saved.', 'success')
@@ -127,7 +135,7 @@ export default {
       uploading,
       handleImage,
       onSubmit,
-      futureDate
+      dateStatus
     }
   }
 }
