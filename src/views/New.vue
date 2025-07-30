@@ -32,7 +32,7 @@
             planned: 'warning',
             wishlist: 'info'
           }[dateStatus]">
-            {{ computedStatus.charAt(0).toUpperCase() + computedStatus.slice(1) }}
+            {{ dateStatus.charAt(0).toUpperCase() + dateStatus.slice(1) }}
           </n-tag>
 
         </div>
@@ -114,16 +114,21 @@ export default {
     }
 
     const onSubmit = async () => {
-      if (!travel.value.notes.trim() || !travel.value.travelDate) {
+      if (!travel.value.notes.trim()) {
         Swal.fire({
           icon: 'warning',
           title: 'Not so fast! ✋',
-          text: "Don’t forget add a date along with some notes!"
+          text: "Don’t forget to add a note!"
         })
         return
       }
 
       travel.value.status = dateStatus.value
+
+      if (new Date(travel.value.travelDate) > new Date('2100-01-01')) {
+        Swal.fire('Hmm...', 'That date seems too far in the future 🧐', 'warning')
+        return
+      }
 
       await addNewTravel(travel.value)
       Swal.fire('Added!', 'New travel log has been saved.', 'success')

@@ -30,7 +30,7 @@
           visited: 'success',
           planned: 'warning',
           wishlist: 'info'
-        }[computedStatus]">
+        }[dateStatus]">
           {{ dateStatus.charAt(0).toUpperCase() + dateStatus.slice(1) }}
         </n-tag>
       </div>
@@ -124,16 +124,16 @@ export default {
     }
 
     const onSubmit = async () => {
-    if (!travel.value.notes.trim() || !travel.value.travelDate) {
+    if (!travel.value.notes.trim()) {
         Swal.fire({
         icon: 'warning',
         title: 'Not so fast! ✋',
-        text: "Don’t forget add a date along with some notes!"
+        text: "Don’t forget to add a note!"
         })
         return
     }
 
-    travel.value.status = computedStatus.value
+    travel.value.status = dateStatus.value
 
     const result = await editTravel(route.params.id, travel.value)
     if (!result) {
