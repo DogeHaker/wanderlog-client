@@ -76,6 +76,7 @@ export default {
     const travel = ref({
       place: '',
       notes: '',
+      status: 'wishlist',
       favorite: false,
       imageUrl: '',
       travelDate: null
